@@ -5,7 +5,7 @@ import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import ListHeader from "@/components/ListHeader";
-import "./global.css";
+import "../global.css";
  
 export default function Index() {
   return (
