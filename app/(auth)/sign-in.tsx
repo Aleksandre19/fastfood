@@ -21,8 +21,9 @@ const SignIn = () => {
 
       Alert.alert('Success', 'User Signed In successfully.');
       router.replace('/');
-    } catch (error: any) {
-      Alert.alert('Error', error.message);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Something went wrong. Please try again.'
+      Alert.alert('Error', message);
     } finally {
       setIsSubmitting(false);
     }

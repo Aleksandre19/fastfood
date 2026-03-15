@@ -22,8 +22,9 @@ const SignUp = () => {
 
       Alert.alert('Success', 'User Signed Up successfully.');
       router.replace('/');
-    } catch (error: any) {
-      Alert.alert('Error', error.message);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Something went wrong. Please try again.'
+      Alert.alert('Error', message);
     } finally {
       setIsSubmitting(false);
     }
@@ -65,7 +66,7 @@ const SignUp = () => {
           Alredy have an account?
         </Text>
         <Link href='/sign-in' className='base-bold text-primary'>
-          Sign Up
+          Sign In
         </Link>
       </View> 
     </View>
