@@ -33,7 +33,7 @@ export const createUser = async ({email, password, name}: CreateUserParams) => {
 
         await signIn({email, password});
 
-        const avatarUrl = avatars.getInitialsURL(name);
+        const avatarUrl = avatars.getInitialsURL(name).toString();
 
         return await database.createDocument({
             databaseId: appwriteConfig.databaseId,
@@ -77,7 +77,11 @@ export const getCurrentUser =  async () => {
             queries: [Query.equal('accountId', currentAccount.$id)]
         });
 
-        if(!currentUser) throw new Error('User document not found');
+        // Returns an object with a documents array, never null/undefined
+        // The check always pass. 
+        // If no matching user exists, documents[0] will be undefined.
+        // That is why !currentUser.documents.length and not !currentUser
+        if(!currentUser.documents.length) throw new Error('User document not found');
         
         return currentUser.documents[0];
 
