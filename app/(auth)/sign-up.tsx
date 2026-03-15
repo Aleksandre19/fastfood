@@ -13,7 +13,6 @@ const SignUp = () => {
     let { name, email, password } = form;
     name = name.trim();
     email = email.trim();
-    password = password.trim();
 
     if(!name || !email || !password) return Alert.alert('Error', 'Please enter a valid credentials');
 

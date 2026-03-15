@@ -12,7 +12,6 @@ const SignIn = () => {
   const submit = async () => {
     let {email, password } = form;
     email = email.trim();
-    password = password.trim();
 
     if(!email || !password) return Alert.alert('Error', 'Please enter a valid email and password');
 

@@ -22,8 +22,12 @@ client
 
 
 export const createUser = async ({email, password, name}: CreateUserParams) => {
+    
+    // By defining the newAccount with the `let` keyword avoides the orphan account creation.
+    let newAccount;
+
     try {
-        const newAccount = await account.create({userId: ID.unique(), email, password, name});
+        newAccount = await account.create({userId: ID.unique(), email, password, name});
 
         if (!newAccount) throw new Error('Account creation failed');
 
@@ -44,7 +48,12 @@ export const createUser = async ({email, password, name}: CreateUserParams) => {
         });
 
     } catch (error) {
-        throw new Error(error instanceof Error ? error. message : String(error));
+        if(newAccount) {
+            try {
+                await account.deleteSession({sessionId: 'current'});
+            } catch { /* ignore cleanup errors */ }
+        }
+        throw new Error(error instanceof Error ? error.message : String(error));
     }
 }
 
@@ -58,23 +67,23 @@ export const signIn = async ({email, password}: SignInParams) => {
 }
 
 export const getCurrentUser =  async () => {
-    const currentAccount = await account.get();
-    if(!currentAccount) throw new Error('Could not find user');
-
     try {
+        const currentAccount = await account.get();
+        if(!currentAccount) throw new Error('Could not find user');
+
         const currentUser = await database.listDocuments({
             databaseId: appwriteConfig.databaseId,
             collectionId: appwriteConfig.collectionId,
-            queries: [Query.equal('accountID', currentAccount.$id)]
+            queries: [Query.equal('accountId', currentAccount.$id)]
         });
 
-        if(!currentUser) throw new Error;
+        if(!currentUser) throw new Error('User document not found');
         
         return currentUser.documents[0];
 
     } catch (error) {
         console.error(error)
-        throw new Error(error instanceof Error ? error. message : String(error));
+        throw new Error(error instanceof Error ? error.message : String(error));
     }
 }
 
