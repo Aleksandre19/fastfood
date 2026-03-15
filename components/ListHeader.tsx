@@ -1,6 +1,7 @@
 import { images } from '@/constants'
 import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
+import CartButton from './CartButton'
 
 // We implemented the FlatList header in the separate component
 // because to render only once when the FlatList component is created
@@ -17,7 +18,7 @@ const ListHeader = () => {
         </TouchableOpacity>
         </View>
 
-        <Text>Cart</Text>
+        <CartButton />
     </View>
   )
 }
