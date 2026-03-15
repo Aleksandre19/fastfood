@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import ListHeader from "@/components/ListHeader";
 import "./global.css";
  
 export default function Index() {
@@ -44,6 +45,7 @@ export default function Index() {
         )
       }}
       contentContainerClassName="pb-28 px-5"
+      ListHeaderComponent={ListHeader}
     />
    </SafeAreaView>
   );
