@@ -9,7 +9,10 @@ const SignIn = () => {
   const [form, setForm ] = useState({ email: '', password: ''});
 
   const submit = async () => {
-    if(!form.email || !form.password) return Alert.alert('Error', 'Please enter a valid email and password');
+    const formEmail = form.email.trim();
+    const formPass = form.password.trim();
+
+    if(!formEmail || !formPass) return Alert.alert('Error', 'Please enter a valid email and password');
 
     setIsSubmitting(true);
 
